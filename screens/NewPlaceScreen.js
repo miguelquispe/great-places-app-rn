@@ -22,7 +22,7 @@ const NewPlaceScreen = ({ navigation }) => {
 
   const savePlaceHandler = () => {
     dispatch(placesActions.addPlace(titleValue));
-    navigation.navigate.goBack();
+    navigation.goBack();
   };
 
   return (
