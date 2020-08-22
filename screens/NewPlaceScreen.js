@@ -11,6 +11,7 @@ import Colors from "../constants/Colors";
 import { useDispatch } from "react-redux";
 import * as placesActions from "../store/places-actions";
 import ImagePicker from "../components/ImagePicker";
+import LocationPicker from "../components/LocationPicker";
 
 const NewPlaceScreen = ({ navigation }) => {
   const [titleValue, setTitleValue] = useState();
@@ -41,6 +42,7 @@ const NewPlaceScreen = ({ navigation }) => {
           value={titleValue}
         />
         <ImagePicker onImagePicked={imageSelectedHandler} />
+        <LocationPicker />
         <Button
           title="Save Place"
           color={Colors.primary}
