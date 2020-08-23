@@ -11,6 +11,7 @@ import * as Permissions from "expo-permissions";
 import * as Location from "expo-location";
 
 import Colors from "../constants/Colors";
+import MapPreview from "./MapPreview";
 
 const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState();
@@ -48,6 +49,7 @@ const LocationPicker = (props) => {
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
+      console.log("pickedLocation", pickedLocation);
     } catch (error) {
       Alert.alert(
         "Could not fetch location",
@@ -60,13 +62,13 @@ const LocationPicker = (props) => {
 
   return (
     <View style={styles.locationPicker}>
-      <View style={styles.mapPreview}>
+      <MapPreview style={styles.mapPreview} location={pickedLocation}>
         {isFetching ? (
           <ActivityIndicator size="large" color={Colors.primary} />
         ) : (
           <Text>No location chosen yet</Text>
         )}
-      </View>
+      </MapPreview>
       <Button
         title="Get user location"
         color={Colors.primary}
@@ -86,8 +88,6 @@ const styles = StyleSheet.create({
     height: 150,
     borderColor: "#ccc",
     borderWidth: 1,
-    justifyContent: "center",
-    alignContent: "center",
   },
 });
 
