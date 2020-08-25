@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,19 @@ import MapPreview from "./MapPreview";
 const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState();
   const [pickedLocation, setPickedLocation] = useState();
+
+  // Ternary
+  // const mapPickedLocation = props.route.params
+  //   ? props.route.params.pickedLocation
+  //   : null;
+  // Chaining
+  const mapPickedLocation = props.route.params?.pickedLocation ?? null;
+
+  useEffect(() => {
+    if (mapPickedLocation) {
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [mapPickedLocation]);
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
