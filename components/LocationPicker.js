@@ -17,6 +17,8 @@ const LocationPicker = (props) => {
   const [isFetching, setIsFetching] = useState();
   const [pickedLocation, setPickedLocation] = useState();
 
+  const { onLocationPicked } = props;
+
   // Ternary
   // const mapPickedLocation = props.route.params
   //   ? props.route.params.pickedLocation
@@ -27,8 +29,9 @@ const LocationPicker = (props) => {
   useEffect(() => {
     if (mapPickedLocation) {
       setPickedLocation(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
+  }, [mapPickedLocation, onLocationPicked]);
 
   const verifyPermissions = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -57,12 +60,18 @@ const LocationPicker = (props) => {
       const location = await Location.getCurrentPositionAsync({
         timeout: 5000,
       });
+
       console.log("location", location);
+
       setPickedLocation({
         lat: location.coords.latitude,
         lng: location.coords.longitude,
       });
-      console.log("pickedLocation", pickedLocation);
+
+      onLocationPicked({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      });
     } catch (error) {
       Alert.alert(
         "Could not fetch location",
